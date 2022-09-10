@@ -4,6 +4,8 @@ This repository contains the Pytorch implementation of the paper: Structure-Awar
 
 Code and dataset will be available soon!
 
+![retrieval](images/retrieval.png)
+
 ## Introduction
 
 ![teaser](images/teaser.png)
@@ -38,6 +40,6 @@ If you find this work useful, please consider citing our work:
 
 ## Acknowledgement
 
-Our project is built upon the followed work:
+Our project is built upon the following work:
 
 - [KeypointDeformer: Unsupervised 3D Keypoint Discovery for Shape Control](https://github.com/tomasjakab/keypoint_deformer)
