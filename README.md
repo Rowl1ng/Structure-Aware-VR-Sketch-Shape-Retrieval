@@ -1,6 +1,6 @@
 # Structure-Aware 3D VR Sketch to 3D Shape Retrieval
 
-This repository contains the Pytorch implementation of the paper: Structure-Aware 3D VR Sketch to 3D Shape Retrieval, 3DV 2022. ([Arxiv link](https://arxiv.org/abs/2209.09043))
+This repository contains the Pytorch implementation of the paper: Structure-Aware 3D VR Sketch to 3D Shape Retrieval, 3DV 2022. ([paper](https://arxiv.org/abs/2209.09043), [supplemental](https://drive.google.com/file/d/11rt_fVuqumWUy_jVMAis4di4KW0bRHJr/view?usp=sharing))
 
 
 Code and dataset will be available soon!
