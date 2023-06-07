@@ -1,0 +1,50 @@
+# @package _global_
+
+# specify here default training configuration
+defaults:
+    - _self_
+    - trainer: default_trainer.yaml
+    - model: msg.yaml
+    - datamodule: SketchyVR_datamodule.yaml
+    - callbacks: default_callbacks.yaml  # set this to null if you don't want to use callbacks
+    - logger: tensorboard.yaml  # set logger here or use command line (e.g. `python train.py logger=wandb`)
+    - mode: exp.yaml
+    - experiment: null
+    - hparams_search: null
+    - override hydra/job_logging: colorlog
+    - override hydra/hydra_logging: colorlog
+
+# path to original working directory (the directory that `train.py` was executed from in command line)
+# hydra hijacks working directory by changing it to the current log directory,
+# so it's useful to have path to original working directory as a special variable
+# read more here: https://hydra.cc/docs/next/tutorials/basic/running_your_app/working_directory
+work_dir: ${hydra:runtime.cwd}/project
+
+# path to folder with data
+#data_dir: ${original_work_dir}/data/
+
+# pretty print config at the start of the run using Rich library
+print_config: True
+
+# disable python warnings if they annoy you
+ignore_warnings: True
+
+# check performance on test set, using the best model achieved during training
+# lightning chooses best model based on metric specified in checkpoint callback
+test_after_training: True
+
+# seed for random number generators in pytorch, numpy and python.random
+seed: null
+
+# name of the run, accessed by loggers
+name: null
+
+# wether 
+resume_training: False
+
+# inference
+inference: False
+radius: 0.01
+
+ckpt_path: null
+load_deformer: True
