@@ -1,0 +1,104 @@
+CONFIG                                                                          
++-- trainer                                                                     
+|   `-- _target_: pytorch_lightning.Trainer                                     
+|       gpus: -1                                                                
+|       min_steps: 2000                                                         
+|       max_steps: 2000                                                         
+|       log_every_n_steps: 10                                                   
+|       val_check_interval: 100                                                 
+|       num_sanity_val_steps: 1                                                 
+|       progress_bar_refresh_rate: 10                                           
+|       weights_summary: null                                                   
+|       default_root_dir: lightning_logs/                                       
+|                                                                               
++-- model                                                                       
+|   `-- num_points: 1024                                                        
+|       transform: false                                                        
+|       _target_: src.models.deformer_cage.Deformer_KP                          
+|       use_xyz: true                                                           
+|       margin: 0.3                                                             
+|       symmetric: false                                                        
+|       encoder: pointnet2_msg                                                  
+|       feat_dim: 512                                                           
+|       lambda_deform_triplet: 0                                                
+|       deform_margin: 0.1                                                      
+|       val_deform: false                                                       
+|       steps_KP: 200                                                           
+|       num_structure_points: 12                                                
+|       KP_dist: ordered_l2                                                     
+|       deformer_ckpt: logs/experiments/cage_pair_2/checkpoints/last.ckpt       
+|       cage_size: 1.4                                                          
+|       ico_sphere_div: 1                                                       
+|       n_influence_ratio: 1.0                                                  
+|       lambda_init_points: 2.0                                                 
+|       lambda_chamfer: 1.0                                                     
+|       lambda_influence_predict_l2: 1000000.0                                  
+|       optimizer: sgd                                                          
+|       weight_decay: 0.0                                                       
+|       lr: 0.001                                                               
+|       schedular: step                                                         
+|       lr_decay: 0.7                                                           
+|       bn_momentum: 0.5                                                        
+|       bnm_decay: 0.5                                                          
+|       decay_step: 20000.0                                                     
+|       batch_size: 16                                                          
+|       step_size: 20                                                           
+|       gamma: 0.7                                                              
+|       stage2_deform_only: false                                               
+|       tl_loss: true                                                           
+|       lambda_KP_dist: 0.0                                                     
+|       lambda_sym: 0.0                                                         
+|       loss_type: regression                                                   
+|       regression_loss: L1                                                     
+|       num_negs: 5                                                             
+|       sigma_lr: 0.1                                                           
+|       fixed_sigma: false                                                      
+|       work_dir: /vol/research/sketching/projects/VR_Sketch_lightning/project  
+|       vis: false                                                              
+|       save_dir: /vol/research/sketching/projects/VR_Sketch_lightning/project  
+|                                                                               
++-- datamodule                                                                  
+|   `-- _target_: src.datamodules.SketchyVR_datamodule.PairDataModule           
+|       batch_size: 16                                                          
+|       data_dir: /vol/vssp/datasets/multiview/3VS/datasets/FineGrained_3DSketch
+|       mesh_dir: /vol/vssp/datasets/multiview/3VS/datasets/ShapeNet/shapenet   
+|       split_file: /vol/research/sketching/projects/VR_Sketch_lightning/project
+|       category: '03001627'                                                    
+|       dataset_loader: Shapes                                                  
+|       train_list: list/hs/train.txt                                           
+|       train_shape_list: list/hs/train.txt                                     
+|       val_list: list/hs/val.txt                                               
+|       val_shape_list: list/hs/val.txt                                         
+|       test_list: list/hs/test.txt                                             
+|       test_shape_list: list/hs/test_shape.txt                                 
+|       source_type: shape                                                      
+|       target_type: shape                                                      
+|       num_points: 1024                                                        
+|       num_workers: 4                                                          
+|       pin_memory: false                                                       
+|       origin_val: true                                                        
+|                                                                               
++-- callbacks                                                                   
+|   `-- model_checkpoint:                                                       
+|         _target_: src.callbacks.custom_callbacks.SelfModelCheckpoint          
+|         monitor: val_loss                                                     
+|         save_top_k: 1                                                         
+|         save_last: true                                                       
+|         mode: min                                                             
+|         every_n_train_steps: 100                                              
+|         dirpath: checkpoints                                                  
+|         filename: '{val_loss:.3f}-{step}'                                     
+|                                                                               
++-- logger                                                                      
+|   `-- tensorboard:                                                            
+|         _target_: pytorch_lightning.loggers.tensorboard.TensorBoardLogger     
+|         save_dir: ''                                                          
+|         name: ''                                                              
+|         version: tb_logs                                                      
+|                                                                               
++-- test_after_training                                                         
+|   `-- True                                                                    
++-- seed                                                                        
+|   `-- 12345                                                                   
+`-- name                                                                        
+    `-- deformer_cage_sh2sh_template                                            

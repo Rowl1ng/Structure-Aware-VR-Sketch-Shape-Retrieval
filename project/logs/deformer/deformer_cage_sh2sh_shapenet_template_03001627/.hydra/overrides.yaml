@@ -1,0 +1,4 @@
+- name=deformer_cage_sh2sh_template
+- experiment=deformer_cage_sh2sh
+- work_dir=/vol/research/sketching/projects/VR_Sketch_lightning/project
+- resume_training=True
