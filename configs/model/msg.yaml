@@ -1,0 +1,23 @@
+_target_: src.models.pointnet2_msg_retrieval.PointNet2RetrievalMSG
+use_xyz: True
+num_structure_points: 16
+margin: 0.3
+symmetric: False
+feat_dim: 512
+
+optimizer: sgd
+weight_decay: 0.0
+lr: 1e-2
+schedular: step
+lr_decay: 0.7
+bn_momentum: 0.5
+bnm_decay: 0.5
+decay_step: 2e4
+batch_size: ${datamodule.batch_size}
+step_size: 20
+gamma: 0.7
+
+#loss
+tl_loss: True
+lambda_sym: 0.0
+

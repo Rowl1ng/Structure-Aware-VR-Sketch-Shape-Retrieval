@@ -39,17 +39,35 @@ conda activate structure
 
 ### For easy inference
 
-All pretrained models (deformer and retrieval) for chair(03001627) can be dowloaded [here](). Please download it and place inside 'project/logs/'. Then run inference by:
+All pretrained models (deformer and retrieval) for chair(03001627) can be dowloaded [here](https://drive.google.com/file/d/18R59QDMkdsVBk40ojdaFYpfm_GvOqm6Q/view?usp=sharing). Please download and unzip the `logs.zip` as:
 
 ```
+- images
+- project
+    - configs: Hydra configs
+        - experiment: Train model with chosen experiment config
+    - logs
+        - experiments
+            - deformer
+            - retrieval
+    - ...
+```
 
+Then run inference by:
+
+```shell
+python project/src/run.py inference=True
+            experiment=retrieval // the config file to be loaded
+            name=retrieval // the trained model to be loaded
+            +test_ckpt=last // use the last checkpoint
 ```
 
 If you want to train from scratch, please follow the intructions below:
 
 ### Step 1: Train Deformer
 
-You can train deformer for any specif category like lamp(03636649), and ariplane category(02691156) of ShapeNet by claiming `++datamodule.category==CATEGORY_ID`.
+You can train deformer for any specif category like chair(03001627), lamp(03636649), and ariplane category(02691156) of ShapeNet by claiming `++datamodule.category==CATEGORY_ID`.
+
 ```shell
 category = 03636649
 name = template_$(category)
@@ -62,24 +80,40 @@ python project/run.py name=$(JobBatchName) experiment=deformer_cage_sh2sh_shapen
 ### Step 2: Compute Fitting Gap
 
 ```shell
-category = 03636649
-python project/val_sh2sh.py
+category = 03001627
+
+python project/val_sh2sh.py --category $(category)
 ```
-Precomputed fitting gap files for chair category can be dowloaded [here]().
 
 ### Step 3: Train
 
-```
+```shell
+category = 03001627
+
+python project/run.py 
+++datamodule.category=$(category) 
+resume_training=True
 
 ```
 
 ## Contact
 
-If you have any questions about this project please feel free to open an issue or contact Ling Luo at ling.rowling.luo@gmail.com.
+If you have any questions about this project please feel free to open an issue or contact Ling Luo at `ling.rowling.luo@gmail.com`.
 
 ## Cite
+
 If you find this work useful, please consider citing our work:
 
+```
+@inproceedings{luo2022structure,
+  title={Structure-aware 3D VR sketch to 3D shape retrieval},
+  author={Luo, Ling and Gryaditskaya, Yulia and Xiang, Tao and Song, Yi-Zhe},
+  booktitle={2022 International Conference on 3D Vision (3DV)},
+  pages={383--392},
+  year={2022},
+  organization={IEEE}
+}
+```
 ## Acknowledgement
 
 Our project is built upon the following work:
