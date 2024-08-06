@@ -1,6 +1,0 @@
-*/__pycache__/
-
-.vscode
-.conda
-logs/*
-*.log
